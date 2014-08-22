@@ -1,11 +1,63 @@
 package romankana
 
 import (
-	//	"fmt"
+	"fmt"
 	"strings"
 )
 
+func HiraganaToKatakana(input string) string {
+	runes := []rune(input)
+	var array []rune
+	for _, r := range runes {
+		if 0x3041 <= r && r <= 0x3096 {
+			r += 0x60
+		}
+		array = append(array, r)
+	}
+	result := string(array)
+	//	fmt.Printf("%v, %v", array, result)
+	return result
+}
+
+func KatakanaToHiragana(input string) string {
+	runes := []rune(input)
+	var array []rune
+	for _, r := range runes {
+		if 0x30A1 <= r && r <= 0x30F6 {
+			r -= 0x60
+		}
+		array = append(array, r)
+	}
+	result := string(array)
+	fmt.Printf("%v, %v", array, result)
+	return result
+}
+
+func FindKanaFromStr(input string) string {
+	if len(input) == 0 {
+		return ""
+	}
+
+	found, ok := r2k[input]
+	if ok {
+		return string(found)
+	} else if len(input) >= 2 && input[0] == 'n' && input[1] == 'n' {
+		return "ン" + FindKanaFromStr(input[2:len(input)])
+	} else if len(input) > 2 && input[0] == 'n' && !strings.Contains("aiueoy", string(input[1])) {
+		return "ン" + FindKanaFromStr(input[1:len(input)])
+	} else if len(input) > 2 && input[0] == 'm' && strings.Contains("bmp", string(input[1])) {
+		return "ン" + FindKanaFromStr(input[1:len(input)])
+	} else if len(input) >= 2 && input[0] == input[1] && strings.Contains("bcdfghjklmnpqrstvwxyz", string(input[0])) {
+		return "ッ" + FindKanaFromStr(input[1:len(input)])
+	} else if len(input) >= 2 {
+		return FindKanaFromStr(input[0:1]) + FindKanaFromStr(input[1:len(input)])
+	} else {
+		return string(input)
+	}
+}
+
 func KanaRoman(input string) string {
+	input = HiraganaToKatakana(input)
 	temp := strings.Split(input, "")
 	var array []string
 	for i, s := range temp {
@@ -51,4 +103,8 @@ func KanaRoman(input string) string {
 	}
 
 	return strings.Join(ret, "")
+}
+
+func RomanKana(input string) string {
+	return ""
 }
