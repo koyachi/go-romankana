@@ -4,6 +4,12 @@ Roman Alphabet <-> Japanese Hiragana/Katkakana Convert Library for Go.
 
 (Go porting from https://github.com/ymrl/romankana)
 
+## Installation
+
+```
+go get github.com/koyachi/go-romankana
+```
+
 ## Example
 
 ```go
@@ -32,3 +38,4 @@ func main() {
 ## Links
 
 - https://github.com/ymrl/romankana
+- https://github.com/gojp/kana
