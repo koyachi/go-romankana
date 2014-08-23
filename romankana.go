@@ -1,7 +1,6 @@
 package romankana
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
@@ -16,7 +15,6 @@ func HiraganaToKatakana(input string) string {
 		array = append(array, r)
 	}
 	result := string(array)
-	//	fmt.Printf("%v, %v", array, result)
 	return result
 }
 
@@ -30,7 +28,6 @@ func KatakanaToHiragana(input string) string {
 		array = append(array, r)
 	}
 	result := string(array)
-	fmt.Printf("%v, %v", array, result)
 	return result
 }
 
