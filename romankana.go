@@ -2,6 +2,7 @@ package romankana
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -106,5 +107,21 @@ func KanaRoman(input string) string {
 }
 
 func RomanKana(input string) string {
-	return ""
+	temp := strings.Split(input, " ")
+	var array []string
+	for _, s := range temp {
+		s2 := regexp.MustCompile("([^aiueo]*[aiueo])").FindAllString(s, -1)
+		var tmp string
+		if len(s2) == 0 {
+			tmp = s
+		} else {
+			var array2 []string
+			for _, s3 := range s2 {
+				array2 = append(array2, FindKanaFromStr(s3))
+			}
+			tmp = strings.Join(array2, "")
+		}
+		array = append(array, tmp)
+	}
+	return strings.Join(array, " ")
 }

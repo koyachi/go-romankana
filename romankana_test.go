@@ -99,7 +99,7 @@ func TestFindKanaFromStr(t *testing.T) {
 	}
 }
 
-func _TestRomanKana(t *testing.T) {
+func TestRomanKana(t *testing.T) {
 	testData := []TestData{
 		TestData{
 			"あのいーはとーゔぉのすきとおったかぜ",
