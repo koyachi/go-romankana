@@ -9,6 +9,7 @@ func HiraganaToKatakana(input string) string {
 	runes := []rune(input)
 	var array []rune
 	for _, r := range runes {
+		// http://www.xn--eckwd4c7cy36u3zowmk0qcl32k.com/unicode/Unichar.html
 		if 0x3041 <= r && r <= 0x3096 {
 			r += 0x60
 		}
@@ -22,6 +23,7 @@ func KatakanaToHiragana(input string) string {
 	runes := []rune(input)
 	var array []rune
 	for _, r := range runes {
+		// http://www.xn--eckwd4c7cy36u3zowmk0qcl32k.com/unicode/Unichar.html
 		if 0x30A1 <= r && r <= 0x30F6 {
 			r -= 0x60
 		}
@@ -104,21 +106,22 @@ func KanaRoman(input string) string {
 }
 
 func RomanKana(input string) string {
-	temp := strings.Split(input, " ")
-	var array []string
+	splitter := " "
+	temp := strings.Split(input, splitter)
+	var words []string
 	for _, s := range temp {
-		s2 := regexp.MustCompile("([^aiueo]*[aiueo])").FindAllString(s, -1)
-		var tmp string
-		if len(s2) == 0 {
-			tmp = s
+		roman_kana_list := regexp.MustCompile("([^aiueo]*[aiueo])").FindAllString(s, -1)
+		var word string
+		if len(roman_kana_list) == 0 {
+			word = s
 		} else {
-			var array2 []string
-			for _, s3 := range s2 {
-				array2 = append(array2, FindKanaFromStr(s3))
+			var kana_list []string
+			for _, kana := range roman_kana_list {
+				kana_list = append(kana_list, FindKanaFromStr(kana))
 			}
-			tmp = strings.Join(array2, "")
+			word = strings.Join(kana_list, "")
 		}
-		array = append(array, tmp)
+		words = append(words, word)
 	}
-	return strings.Join(array, " ")
+	return strings.Join(words, splitter)
 }
